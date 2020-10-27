@@ -1,15 +1,12 @@
 import React from 'react';
-import useTodos from './Hooks/useTodos';
 import { Paper, AppBar, Toolbar, Typography, Grid } from '@material-ui/core';
 import TodoList from './TodoList';
 import TodoForm from './TodoForm';
+import { TodosProvider } from './contexts/todos.context';
 import 'fontsource-roboto';
 
 function TodoApp(props) {
-  const initialTodos = [{ id: 1, task: 'Pet a monkey', complete: false }];
-  const { todos, addTodo, removeTodo, toggleTodo, editTodo } = useTodos(
-    initialTodos
-  );
+  // const initialTodos = [{ id: 1, task: 'Pet a monkey', complete: false }];
 
   return (
     <Paper
@@ -28,13 +25,10 @@ function TodoApp(props) {
       </AppBar>
       <Grid container justify="center" style={{ marginTop: '1rem' }}>
         <Grid item xs={11} md={8} lg={4}>
-          <TodoForm addTodo={addTodo} />
-          <TodoList
-            todos={todos}
-            removeTodo={removeTodo}
-            toggleTodo={toggleTodo}
-            editTodo={editTodo}
-          />
+          <TodosProvider>
+            <TodoForm />
+            <TodoList />
+          </TodosProvider>
         </Grid>
       </Grid>
     </Paper>
